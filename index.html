@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html class="dark" lang="en" style="background-color: #020613;">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>FINNET MEDIA | Architecture of Digital Icons</title>
+    
+    <!-- Design System Engines -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Core Animation Frameworks -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            deep: '#020613',
+                            sapphire: '#070F24',
+                            royal: '#1D4ED8',
+                            electric: '#2563EB',
+                            brightRoyal: '#3B82F6',
+                            glow: 'rgba(29, 78, 216, 0.15)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            min-height: 100%;
+            background-color: #020613;
+            color: #F8FAFC;
+            font-size: 14px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+            vertical-align: middle;
+        }
+        .glass-premium {
+            background: rgba(7, 15, 36, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+        }
+        .text-gradient-sapphire {
+            background: linear-gradient(135deg, #FFFFFF 20%, #3B82F6 70%, #1D4ED8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .marquee-container:hover .marquee-content { animation-play-state: paused; }
+        @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+        .animate-marquee { animation: marquee 40s linear infinite; }
+        
+        .reveal-scroll { opacity: 0; transform: translateY(35px); filter: blur(8px); }
+        .reveal-left { opacity: 0; transform: translateX(-30px); filter: blur(6px); }
+
+        .custom-cursor {
+            width: 6px;
+            height: 6px;
+            background: #3B82F6;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.8);
+        }
+        .custom-cursor-follower {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #020613; }
+        ::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.3); border-radius: 20px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(59, 130, 246, 0.6); }
+    </style>
+</head>
+<body class="antialiased font-sans select-none tracking-normal">
+
+    <div class="custom-cursor hidden lg:block" id="cursor-dot"></div>
+    <div class="custom-cursor-follower hidden lg:block" id="cursor-follower"></div>
+
+    <!-- 1. CINEMATIC OVERLAY LOADER -->
+    <div id="intro-loader" class="fixed inset-0 z-[9999] bg-brand-deep flex flex-col items-center justify-center overflow-hidden will-change-transform">
+        <div class="absolute inset-0 opacity-50 mix-blend-screen pointer-events-none bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.2)_0%,transparent_60%)]"></div>
+        <div class="relative flex flex-col items-center text-center px-4">
+            <div id="loader-aura" class="absolute w-40 h-40 bg-brand-electric/20 rounded-full blur-[60px] -z-10 scale-50 opacity-0"></div>
+            <h1 id="loader-logo" class="text-2xl md:text-4xl font-light tracking-[0.35em] text-white opacity-0 transform translate-y-6 select-none">
+                FINNET <span class="font-bold text-gradient-sapphire">MEDIA</span>
+            </h1>
+            <p id="loader-status" class="text-[10px] font-serif italic text-blue-300 mt-2 tracking-widest opacity-0">Building Digital Icons.</p>
+            <div class="w-36 h-[1px] bg-blue-900/40 mt-8 rounded-full overflow-hidden relative">
+                <div id="loader-bar" class="absolute top-0 left-0 h-full w-0 bg-gradient-to-r from-blue-600 to-blue-400"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cursor-glow" class="w-[500px] h-[500px] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.06)_0%,rgba(29,78,216,0.02)_60%,transparent_100%)] fixed pointer-events-none -translate-x-1/2 -translate-y-1/2 z-0 opacity-90 hidden lg:block"></div>
+
+    <!-- 2. NAVIGATION BAR -->
+    <nav id="main-nav" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-5 px-6 lg:px-12 transparent">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <a href="#hero" class="flex items-center gap-1.5 text-base md:text-lg font-light tracking-[0.25em] text-white select-none hover-target anchor-link h-10">
+                <span class="inline-block pt-[2px]">FINNET</span>
+                <span class="font-bold text-gradient-sapphire pt-[2px]">MEDIA</span>
+            </a>
+            
+            <div id="nav-links-container" class="hidden lg:flex items-center space-x-8 text-[10px] tracking-[0.2em] uppercase text-blue-200/60 font-medium"></div>
+
+            <div class="hidden lg:flex items-center">
+                <a href="#contact" class="hover-target anchor-link border border-blue-500/30 hover:border-blue-400 text-white bg-blue-950/40 py-2 px-5 text-[9px] tracking-[0.2em] transition-all duration-400">CONNECT</a>
+            </div>
+
+            <button id="menu-open" class="lg:hidden text-white p-1 hover-target flex items-center" aria-label="Toggle Menu">
+                <span class="material-symbols-outlined text-xl">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-brand-deep flex flex-col justify-center items-center px-6 hidden opacity-0 transition-all duration-500">
+        <button class="absolute top-6 right-6 p-3 hover-target" id="menu-close">
+            <span class="material-symbols-outlined text-2xl">close</span>
+        </button>
+        <div id="mobile-links-container" class="flex flex-col gap-6 text-center text-sm tracking-[0.2em] uppercase"></div>
+    </div>
+
+    <!-- MAIN SCROLL WRAPPER CONTAINER -->
+    <main class="relative z-10">
+        <section id="hero" class="min-h-screen flex items-center pt-20 px-6 lg:px-12 relative overflow-hidden">
+            <div class="absolute inset-0 z-0 bg-[radial-gradient(circle_at_70%_30%,rgba(59,130,246,0.05)_0%,transparent_50%),radial-gradient(circle_at_20%_80%,rgba(29,78,216,0.03)_0%,transparent_50%)]"></div>
+            <div id="hero-content" class="max-w-5xl mx-auto lg:mx-0 text-center lg:text-left relative z-10 space-y-6 mt-6"></div>
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-2 opacity-30">
+                <div class="w-[1px] h-12 bg-gradient-to-b from-blue-500 via-blue-500/10 to-transparent relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1/2 bg-white animate-bounce"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 px-6 lg:px-12 max-w-6xl mx-auto border-t border-blue-950/40">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center reveal-scroll">
+                <div>
+                    <span class="text-[9px] uppercase tracking-[0.35em] text-blue-400 font-semibold mb-2 block">Our Vision</span>
+                    <h3 class="text-2xl lg:text-4xl font-light tracking-tight text-white mb-4">Architects of Contemporary Influence</h3>
+                </div>
+                <p class="text-blue-200/60 text-xs font-light leading-relaxed tracking-wide">
+                    We step beyond transactional logistics to craft distinct legacy strategies. By building proprietary digital products and engineering broadcast-level visual standards, we make sure our roster retains ultimate cultural and commercial authority globally.
+                </p>
+            </div>
+        </section>
+
+        <section id="influencers" class="py-24 px-6 lg:px-12 max-w-6xl mx-auto border-t border-blue-950/40">
+            <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 gap-4 reveal-scroll">
+                <div>
+                    <span class="text-[9px] uppercase tracking-[0.35em] text-blue-400 font-semibold mb-2 block">The Finnet Elite</span>
+                    <h3 class="text-2xl lg:text-4xl font-light tracking-tight">Global Roster</h3>
+                </div>
+                <div class="flex gap-3">
+                    <button class="swiper-prev p-3 rounded-full border border-blue-500/10 hover:border-blue-500/40 text-gray-400 hover:text-white transition-all duration-300 hover-target"><span class="material-symbols-outlined text-sm">arrow_back</span></button>
+                    <button class="swiper-next p-3 rounded-full border border-blue-500/10 hover:border-blue-500/40 text-gray-400 hover:text-white transition-all duration-300 hover-target"><span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+                </div>
+            </div>
+            <div class="swiper influencer-swiper overflow-visible reveal-scroll">
+                <div id="influencer-cards-container" class="swiper-wrapper"></div>
+            </div>
+        </section>
+
+        <section id="services" class="py-24 px-6 lg:px-12 max-w-6xl mx-auto border-t border-blue-950/40">
+            <div class="text-center mb-16 max-w-2xl mx-auto reveal-scroll">
+                <h2 class="text-2xl lg:text-4xl font-light tracking-tight mb-4">Engineered for Dominance</h2>
+                <p class="text-blue-200/60 font-light text-xs tracking-wide leading-relaxed">A refined strategic blueprint designed to launch digital assets to peak authority scales.</p>
+            </div>
+            <div id="services-grid-container" class="grid grid-cols-1 md:grid-cols-12 gap-5"></div>
+        </section>
+
+        <section id="why-us" class="py-20 bg-gradient-to-b from-transparent via-brand-sapphire to-transparent border-y border-blue-950/40">
+            <div id="metrics-container" class="max-w-6xl mx-auto px-6 lg:px-12 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center"></div>
+        </section>
+
+        <section class="py-14 overflow-hidden bg-brand-deep border-b border-blue-950/40">
+            <div class="marquee-container relative w-full flex overflow-x-hidden opacity-30 hover:opacity-100 transition-opacity duration-500">
+                <div id="marquee-container-1" class="marquee-content flex space-x-16 items-center whitespace-nowrap animate-marquee text-[10px] tracking-[0.5em] font-light text-blue-300 uppercase"></div>
+                <div id="marquee-container-2" class="marquee-content flex space-x-16 items-center whitespace-nowrap animate-marquee text-[10px] tracking-[0.5em] font-light text-blue-300 uppercase" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <section id="process" class="py-24 px-6 lg:px-12 max-w-3xl mx-auto overflow-hidden">
+            <h2 class="text-2xl lg:text-4xl font-light tracking-tight mb-20 text-center reveal-scroll">The Growth Roadmap</h2>
+            <div class="relative max-w-4xl mx-auto px-2 md:px-0">
+                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-blue-500/20 to-transparent"></div>
+                <div id="timeline-events-container" class="space-y-28"></div>
+            </div>
+        </section>
+
+        <!-- 9. BENTO TERMINAL EMAIL CONNECTION MODULE -->
+        <!-- 9. LUXURY EMAIL PREVIEW CONNECTION MODULE -->
+        <section id="contact" class="py-24 px-6 lg:px-12 bg-[radial-gradient(circle_at_50%_100%,rgba(59,130,246,0.05)_0%,transparent_60%)] border-t border-blue-950/40">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 reveal-scroll">
+                
+                <!-- Left Narrative Display Block -->
+                <div class="lg:col-span-5 flex flex-col justify-center space-y-6 pr-0 lg:pr-8 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 bg-blue-950/40 border border-blue-500/20 px-3 py-1 self-center lg:self-start">
+                        <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+                        <span class="text-[8px] font-mono tracking-widest text-blue-300 uppercase">Direct Connection</span>
+                    </div>
+                    <h2 class="text-3xl lg:text-4xl font-light tracking-tight text-white leading-tight">
+                        Initialize Digital <br>
+                        <span class="font-serif italic text-gradient-sapphire font-normal">Alignment</span>
+                    </h2>
+                    <p class="text-blue-200/60 font-light text-xs leading-relaxed tracking-wide">
+                        Select your partnership track below. The interface automatically drafts a tailored message layout, ready for direct transmission into our agency desks.
+                    </p>
+                    
+                    <!-- Parameter Matrix Selection Buttons -->
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-2.5 pt-2">
+                        <button data-track="Creator" class="track-selector px-4 py-2 border border-blue-500/30 text-white font-medium text-[9px] tracking-wider uppercase bg-blue-950/40 transition-all duration-300 hover-target">Talent Roster</button>
+                        <button data-track="Brand Partner" class="track-selector px-4 py-2 border border-blue-500/10 text-blue-300/50 font-medium text-[9px] tracking-wider uppercase bg-transparent transition-all duration-300 hover-target">Brand Partner</button>
+                        <button data-track="Agency Representative" class="track-selector px-4 py-2 border border-blue-500/10 text-blue-300/50 font-medium text-[9px] tracking-wider uppercase bg-transparent transition-all duration-300 hover-target">Syndicate Rep</button>
+                    </div>
+                </div>
+
+                <!-- Right Side: Luxury Mock Email Client Interface -->
+                <div class="lg:col-span-7 bg-[#050c1e] border border-blue-900/30 rounded-none p-6 font-sans relative flex flex-col justify-between group shadow-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-950/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                    
+                    <div>
+                        <!-- Header Field Enclosures -->
+                        <div class="space-y-3 pb-4 mb-4 border-b border-blue-950/50 text-xs text-blue-100/70">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-12 text-blue-400/50 select-none font-mono">To:</span>
+                                <span class="font-medium tracking-wide">hello@finnetmedia.com</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="w-12 text-blue-400/50 select-none font-mono">Subject:</span>
+                                <span class="font-medium tracking-wide text-blue-200">Finnet Partnership Inquiry (<span id="email-subject-track">Creator</span>)</span>
+                            </div>
+                        </div>
+
+                        <!-- Read-only Email Body Envelope -->
+                        <div class="pt-2 text-left text-xs md:text-sm text-gray-300 leading-relaxed min-h-[120px] select-text">
+                            <p class="font-light">Hello Finnet Team,</p>
+                            <br>
+                            <p class="font-light text-blue-100/90">
+                                I am looking to initiate an optimization alignment under your <span id="email-body-track" class="text-blue-400 font-medium">Creator</span> track operations. I want to connect.
+                            </p>
+                            <br>
+                            <p class="font-light text-gray-500">Regards,</p>
+                        </div>
+                    </div>
+
+                    <!-- Dispatch Trigger Footer -->
+                    <div class="pt-4 border-t border-blue-950/40 mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <span class="text-[9px] text-blue-300/30 tracking-wider font-mono select-none">READY FOR CLIENT HANDOFF</span>
+                        <button id="direct-mail-trigger" class="hover-target w-full sm:w-auto px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white text-[9px] tracking-[0.25em] font-bold uppercase transition-all duration-300 shadow-lg shadow-blue-900/40 flex items-center justify-center gap-2">
+                            <span>LAUNCH CLIENT DISPATCH</span>
+                            <span class="material-symbols-outlined text-xs">mail</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-brand-deep w-full border-t border-blue-950/40 pt-16 pb-8 overflow-hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 px-6 lg:px-12 max-w-6xl mx-auto mb-16">
+            <div class="md:col-span-2">
+                <div class="tracking-[0.25em] text-white text-xs mb-4">FINNET <span class="text-gradient-sapphire font-semibold">MEDIA</span></div>
+                <p class="max-w-xs text-[11px] text-blue-200/50 leading-relaxed tracking-wide">Architects of high-tier digital authority. We optimize performance matrices portfolios globally.</p>
+            </div>
+            <div>
+                <h5 class="text-blue-400 mb-4 font-semibold uppercase tracking-[0.25em] text-[9px]">Ecosystem Architecture</h5>
+                <ul class="space-y-3 text-[11px] text-blue-200/50 font-light">
+                    <li><a class="hover-target anchor-link hover:text-white transition-colors duration-300" href="#influencers">Creators Roster</a></li>
+                    <li><a class="hover-target anchor-link hover:text-white transition-colors duration-300" href="#services">Bento Infrastructure</a></li>
+                    <li><a class="hover-target anchor-link hover:text-white transition-colors duration-300" href="#process">Roadmap Operations</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-blue-400 mb-4 font-semibold uppercase tracking-[0.25em] text-[9px]">Syndicate Hubs</h5>
+                <ul class="space-y-3 text-[11px] text-blue-200/50 font-light">
+                    <li><a class="hover-target hover:text-white transition-colors duration-300" href="#">Instagram Desk</a></li>
+                    <li><a class="hover-target hover:text-white transition-colors duration-300" href="#">LinkedIn Panel</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="px-6 lg:px-12 max-w-6xl mx-auto pt-8 border-t border-blue-950/40 flex flex-col md:flex-row justify-between items-center gap-4 text-[8px] uppercase tracking-[0.4em] opacity-40">
+            <span>© 2026 FINNET MEDIA.</span>
+        </div>
+    </footer>
+
+    <!-- PIPELINE RUNTIME LOGIC ENGINE -->
+    <script type="module">
+        import { siteData } from './data.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+            
+            renderSiteElements();
+            initCustomCursor();
+            initSmoothScrolling();
+            initCinematicIntro();
+            initNavigationEffects();
+            initSwiperCarousels();
+            initScrollAnimations();
+            initDirectMailRouter();
+        });
+
+        let lenisInstance;
+
+        function renderSiteElements() {
+            const navContainer = document.getElementById('nav-links-container');
+            const mobileContainer = document.getElementById('mobile-links-container');
+            
+            siteData.navigation.forEach(item => {
+                navContainer.innerHTML += `<a href="${item.target}" class="hover:text-white transition-colors duration-300 relative group py-1.5 hover-target anchor-link">${item.name}<span class="absolute bottom-0 left-0 w-0 h-[1px] bg-blue-400 transition-all duration-300 group-hover:w-full"></span></a>`;
+                mobileContainer.innerHTML += `<a class="mobile-link anchor-link text-white font-light hover:text-blue-400 transition-colors" href="${item.target}">${item.name}</a>`;
+            });
+
+            document.getElementById('hero-content').innerHTML = `
+                <div class="inline-flex items-center space-x-2 glass-premium px-4 py-1.5 border-white/5 transform opacity-0 translate-y-4 reveal-hero">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+                    <span class="text-[8px] uppercase tracking-[0.35em] text-blue-300 font-medium">${siteData.hero.badge}</span>
+                </div>
+                <h1 class="text-4xl sm:text-6xl lg:text-8xl font-light tracking-tight leading-[0.98] max-w-4xl mx-auto lg:mx-0 transform opacity-0 translate-y-6 reveal-hero">${siteData.hero.mainTitle}</h1>
+                <p class="text-xs sm:text-sm text-blue-200/60 max-w-xl mx-auto lg:mx-0 font-light leading-relaxed tracking-wider transform opacity-0 translate-y-6 reveal-hero">${siteData.hero.description}</p>
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2 transform opacity-0 translate-y-6 reveal-hero">
+                    <a href="#contact" class="hover-target anchor-link w-full sm:w-auto px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-[9px] tracking-[0.25em] uppercase transition-all duration-300 shadow-lg shadow-blue-900/30">${siteData.hero.ctaPrimary}</a>
+                    <a href="#contact" class="hover-target anchor-link w-full sm:w-auto px-8 py-3.5 glass-premium text-white border border-blue-500/20 hover:border-blue-500 text-[9px] tracking-[0.25em] uppercase transition-all duration-300">${siteData.hero.ctaSecondary}</a>
+                </div>
+            `;
+
+            const influencerWrapper = document.getElementById('influencer-cards-container');
+            siteData.influencers.forEach(c => {
+                influencerWrapper.innerHTML += `
+                    <div class="swiper-slide h-auto">
+                        <div class="glass-premium overflow-hidden group border border-blue-900/20 h-full flex flex-col justify-between p-4" data-tilt data-tilt-max="3" data-tilt-speed="400">
+                            <div class="relative w-full aspect-[4/5] overflow-hidden bg-brand-sapphire">
+                                <img src="${c.image}" alt="Talent" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105">
+                                <div class="absolute top-3 right-3 bg-brand-deep/80 backdrop-blur-md border border-blue-500/20 px-2.5 py-1 text-[8px] font-semibold tracking-widest text-blue-400 uppercase">${c.category}</div>
+                            </div>
+                            <div class="pt-4 pb-1">
+                                <h4 class="text-base font-medium tracking-wide text-white">${c.name}</h4>
+                                <div class="grid grid-cols-2 gap-3 my-3 border-y border-blue-950/50 py-3 text-left">
+                                    <div>
+                                        <span class="block text-[8px] uppercase text-gray-500 tracking-wider">Reach</span>
+                                        <span class="text-sm font-semibold text-white count-up" data-target="${c.reach}">0</span><span class="text-xs font-semibold text-white">${c.reachUnit}</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-[8px] uppercase text-gray-500 tracking-wider">Engagement</span>
+                                        <span class="text-sm font-semibold text-blue-400 count-up" data-target="${c.engagement}">0</span><span class="text-xs font-semibold text-blue-400">${c.engagementUnit}</span>
+                                    </div>
+                                </div>
+                                <a href="#contact" class="hover-target anchor-link w-full text-center block border border-blue-500/20 py-2 text-[9px] tracking-widest font-light bg-blue-950/30 hover:bg-blue-600 hover:text-white transition-all">VIEW MEDIA KIT</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const bentoGrid = document.getElementById('services-grid-container');
+            siteData.bentoServices.forEach(item => {
+                if(item.type === 'large') {
+                    bentoGrid.innerHTML += `
+                        <div class="md:col-span-8 glass-premium p-8 rounded-none group hover:border-blue-500/30 transition-all duration-500 reveal-scroll flex flex-col justify-between">
+                            <div>
+                                <span class="material-symbols-outlined text-blue-400 text-4xl mb-6">${item.icon}</span>
+                                <h3 class="text-xl font-light tracking-wide mb-4">${item.title}</h3>
+                                <p class="text-blue-200/60 font-light text-xs mb-8 leading-relaxed tracking-wide">${item.desc}</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                ${item.tags.map(t => `<span class="px-4 py-1.5 bg-blue-950/60 border border-blue-500/15 rounded-none text-[8px] font-mono tracking-wider text-blue-300 uppercase">${t}</span>`).join('')}
+                            </div>
+                        </div>`;
+                } else if(item.type === 'accent') {
+                    bentoGrid.innerHTML += `
+                        <div class="md:col-span-4 p-8 bg-gradient-to-br from-blue-950 via-brand-sapphire to-blue-900 border border-blue-500/20 group hover:border-blue-400/40 transition-all duration-500 text-white flex flex-col justify-between reveal-scroll min-h-[260px]">
+                            <div>
+                                <span class="material-symbols-outlined text-white text-4xl mb-6">${item.icon}</span>
+                                <h3 class="text-xl font-light tracking-wide mb-4 leading-tight">${item.title}</h3>
+                                <p class="text-blue-100/60 font-light text-xs leading-relaxed tracking-wide">${item.desc}</p>
+                            </div>
+                            <a class="hover-target anchor-link flex items-center gap-2 font-semibold uppercase text-[8px] tracking-[0.3em] hover:gap-4 transition-all text-white mt-4" href="#contact">${item.linkText} <span class="material-symbols-outlined text-xs">north_east</span></a>
+                        </div>`;
+                } else if(item.type === 'small') {
+                    bentoGrid.innerHTML += `
+                        <div class="md:col-span-5 glass-premium p-8 rounded-none group hover:border-blue-500/30 transition-all duration-500 reveal-scroll">
+                            <span class="material-symbols-outlined text-blue-400 text-4xl mb-6">${item.icon}</span>
+                            <h3 class="text-lg font-light tracking-wide mb-4">${item.title}</h3>
+                            <p class="text-blue-200/60 font-light text-xs leading-relaxed tracking-wide">${item.desc}</p>
+                        </div>`;
+                } else if(item.type === 'small-icon') {
+                    bentoGrid.innerHTML += `
+                        <div class="md:col-span-7 glass-premium p-8 rounded-none group hover:border-blue-500/30 transition-all duration-500 overflow-hidden relative reveal-scroll">
+                            <div class="relative z-10">
+                                <span class="material-symbols-outlined text-blue-400 text-4xl mb-6">${item.icon}</span>
+                                <h3 class="text-lg font-light tracking-wide mb-4">${item.title}</h3>
+                                <p class="text-blue-200/60 font-light text-xs max-w-md leading-relaxed tracking-wide">${item.desc}</p>
+                            </div>
+                            <div class="absolute right-[-15px] bottom-[-15px] opacity-[0.02] pointer-events-none group-hover:scale-105 transition-transform duration-1000">
+                                <span class="material-symbols-outlined text-[200px]">${item.bgIcon}</span>
+                            </div>
+                        </div>`;
+                }
+            });
+
+            const metricsContainer = document.getElementById('metrics-container');
+            siteData.metrics.forEach(m => {
+                metricsContainer.innerHTML += `
+                    <div class="space-y-2 reveal-scroll">
+                        <span class="block text-3xl sm:text-5xl font-light text-gradient-sapphire"><span class="count-up" data-target="${m.value}">0</span>${m.suffix}</span>
+                        <span class="block text-[8px] uppercase tracking-[0.25em] text-blue-400/60">${m.label}</span>
+                    </div>`;
+            });
+
+            const brandString = siteData.brands.map(b => `<span>${b}</span>`).join('');
+            document.getElementById('marquee-container-1').innerHTML = brandString;
+            document.getElementById('marquee-container-2').innerHTML = brandString;
+
+            const timelineContainer = document.getElementById('timeline-events-container');
+            siteData.timeline.forEach((step, idx) => {
+                const isEven = idx % 2 !== 0;
+                timelineContainer.innerHTML += `
+                    <div class="relative flex flex-col md:flex-row ${isEven ? 'md:flex-row-reverse' : ''} items-start md:items-center justify-between group reveal-scroll">
+                        <div class="pl-8 md:pl-0 md:w-[45%] text-left ${!isEven ? 'md:text-right' : ''}">
+                            <span class="text-[9px] font-mono text-blue-400 tracking-widest block mb-1">${step.phase}</span>
+                            <h3 class="text-lg font-normal text-white">${step.title}</h3>
+                            <p class="text-blue-200/50 mt-2 text-xs leading-relaxed tracking-wide">${step.desc}</p>
+                        </div>
+                        <div class="absolute left-[12px] md:left-1/2 md:-translate-x-1/2 w-2 h-2 rounded-full bg-blue-500 z-10 shadow-[0_0_12px_#2563EB]"></div>
+                        <div class="hidden md:block md:w-[45%]"></div>
+                    </div>`;
+            });
+        }
+
+        // DIRECT CODE TERMINAL EMAIL ROUTER
+        // LUXURY MOCK EMAIL CLIENT DISPATCH CONFIGURATOR
+        function initDirectMailRouter() {
+            let activeTrack = "Creator"; 
+            const selectors = document.querySelectorAll('.track-selector');
+            const mailTrigger = document.getElementById('direct-mail-trigger');
+            const emailSubjectTrack = document.getElementById('email-subject-track');
+            const emailBodyTrack = document.getElementById('email-body-track');
+
+            if(!mailTrigger) return;
+
+            selectors.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    selectors.forEach(b => {
+                        b.classList.remove('border-blue-500/30', 'text-white', 'bg-blue-950/40');
+                        b.classList.add('border-blue-500/10', 'text-blue-300/50', 'bg-transparent');
+                    });
+                    this.classList.remove('border-blue-500/10', 'text-blue-300/50', 'bg-transparent');
+                    this.classList.add('border-blue-500/30', 'text-white', 'bg-blue-950/40');
+                    
+                    activeTrack = this.getAttribute('data-track');
+                    
+                    // Live UI Updates reflecting chosen track parameters
+                    if (emailSubjectTrack) emailSubjectTrack.innerText = activeTrack;
+                    if (emailBodyTrack) emailBodyTrack.innerText = activeTrack;
+                });
+            });
+
+            mailTrigger.addEventListener('click', () => {
+                const targetEmail = siteData.agencyEmail || 'hello@finnetmedia.com';
+                const subject = `Finnet Partnership Inquiry (${activeTrack})`;
+                const body = `Hello Finnet Team,\n\nI am looking to initiate an optimization alignment under your ${activeTrack} track operations. I want to connect.\n\nRegards,`;
+
+                window.location.href = `mailto:${targetEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            });
+        }
+
+        function initCustomCursor() {
+            const dot = document.getElementById('cursor-dot');
+            const follower = document.getElementById('cursor-follower');
+            if(!dot || !follower) return;
+
+            window.addEventListener('mousemove', (e) => {
+                gsap.to(dot, { x: e.clientX, y: e.clientY, duration: 0.08 });
+                gsap.to(follower, { x: e.clientX, y: e.clientY, duration: 0.22 });
+            });
+
+            document.body.addEventListener('mouseenter', (e) => {
+                if (e.target.classList && e.target.classList.contains('hover-target')) {
+                    dot.style.transform = 'translate(-50%, -50%) scale(2.2)';
+                    dot.style.backgroundColor = '#ffffff';
+                    follower.style.borderColor = 'rgba(255,255,255,0.5)';
+                }
+            }, true);
+
+            document.body.addEventListener('mouseleave', (e) => {
+                if (e.target.classList && e.target.classList.contains('hover-target')) {
+                    dot.style.transform = 'translate(-50%, -50%) scale(1)';
+                    dot.style.backgroundColor = '#3B82F6';
+                    follower.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                }
+            }, true);
+        }
+
+        function initSmoothScrolling() {
+            lenisInstance = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                orientation: 'vertical',
+                smoothWheel: true,
+                wheelMultiplier: 0.9,
+            });
+
+            lenisInstance.on('scroll', ScrollTrigger.update);
+
+            function raf(time) {
+                lenisInstance.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+
+            document.body.addEventListener('click', function(e) {
+                const link = e.target.closest('.anchor-link');
+                if (!link) return;
+                
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                if (!targetId || targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    lenisInstance.scrollTo(targetElement, { offset: -50 });
+                }
+            });
+        }
+
+        function initCinematicIntro() {
+            const introOverlay = document.getElementById('intro-loader');
+            const loaderLogo = document.getElementById('loader-logo');
+            const loaderStatus = document.getElementById('loader-status');
+            const loaderBar = document.getElementById('loader-bar');
+            const loaderAura = document.getElementById('loader-aura');
+
+            if (!introOverlay) return;
+
+            if (lenisInstance) lenisInstance.stop();
+            document.body.style.overflow = 'hidden';
+
+            const introTimeline = gsap.timeline({
+                onComplete: () => {
+                    introOverlay.style.pointerEvents = 'none';
+                    document.body.style.overflow = '';
+                    if (lenisInstance) lenisInstance.start();
+                    initHeroAnimations();
+                }
+            });
+
+            introTimeline.to(loaderAura, { opacity: 1, scale: 1.5, duration: 0.8, ease: 'power2.out' })
+                         .to(loaderLogo, { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' }, '-=0.5')
+                         .to(loaderStatus, { opacity: 1, duration: 0.6 }, '-=0.3')
+                         .to(loaderBar, { width: '100%', duration: 1.4, ease: 'power2.inOut' }, '-=0.5')
+                         .to(introOverlay, { scale: 1.15, opacity: 0, filter: 'blur(30px)', duration: 0.9, ease: 'power4.inOut' })
+                         .set(introOverlay, { display: 'none' });
+        }
+
+        function initNavigationEffects() {
+            const nav = document.getElementById('main-nav');
+            const cursorGlow = document.getElementById('cursor-glow');
+            const menuOpen = document.getElementById('menu-open');
+            const menuClose = document.getElementById('menu-close');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 40) {
+                    nav.classList.remove('py-5', 'transparent');
+                    nav.classList.add('py-3.5', 'glass-premium', 'shadow-2xl');
+                } else {
+                    nav.classList.remove('py-3.5', 'glass-premium', 'shadow-2xl');
+                    nav.classList.add('py-5', 'transparent');
+                }
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if(cursorGlow) {
+                    gsap.to(cursorGlow, { x: e.clientX, y: e.clientY, duration: 0.6, ease: 'power3.out' });
+                }
+            });
+
+            if(menuOpen && menuClose && mobileMenu) {
+                menuOpen.addEventListener('click', () => {
+                    mobileMenu.classList.remove('hidden');
+                    gsap.to(mobileMenu, { opacity: 1, duration: 0.3 });
+                    if (lenisInstance) lenisInstance.stop();
+                });
+                const closeAction = () => {
+                    gsap.to(mobileMenu, { opacity: 0, duration: 0.3, onComplete: () => mobileMenu.classList.add('hidden') });
+                    if (lenisInstance) lenisInstance.start();
+                };
+                menuClose.addEventListener('click', closeAction);
+                mobileMenu.addEventListener('click', (e) => {
+                    if(e.target.classList.contains('mobile-link')) closeAction();
+                });
+            }
+        }
+
+        function initHeroAnimations() {
+            gsap.to('.reveal-hero', { opacity: 1, y: 0, duration: 1.0, stagger: 0.12, ease: 'power3.out' });
+        }
+
+        function initScrollAnimations() {
+            gsap.utils.toArray('.reveal-scroll').forEach(element => {
+                gsap.to(element, {
+                    scrollTrigger: { trigger: element, start: 'top 90%', toggleActions: 'play none none none' },
+                    opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0, ease: 'power3.out'
+                });
+            });
+
+            const counters = document.querySelectorAll('.count-up');
+            counters.forEach(counter => {
+                const targetValue = parseInt(counter.getAttribute('data-target'), 10);
+                ScrollTrigger.create({
+                    trigger: counter,
+                    start: 'top 92%',
+                    onEnter: () => {
+                        let obj = { value: 0 };
+                        gsap.to(obj, {
+                            value: targetValue, duration: 1.8, ease: 'power3.out',
+                            onUpdate: () => { counter.textContent = Math.floor(obj.value); }
+                        });
+                    }
+                });
+            });
+
+            if (window.innerWidth > 1024) {
+                document.body.addEventListener('mousemove', (e) => {
+                    const target = e.target.closest('.hover-target');
+                    if(!target) return;
+                    const { left, top, width, height } = target.getBoundingClientRect();
+                    const x = e.clientX - left - width / 2;
+                    const y = e.clientY - top - height / 2;
+                    gsap.to(target, { x: x * 0.1, y: y * 0.1, duration: 0.3, ease: 'power2.out' });
+                });
+
+                document.body.addEventListener('mouseleave', (e) => {
+                    const target = e.target.closest('.hover-target');
+                    if(!target) return;
+                    gsap.to(target, { x: 0, y: 0, duration: 0.4, ease: 'power3.out' });
+                }, true);
+            }
+            
+            if (window.innerWidth > 1024) {
+                setTimeout(() => {
+                    VanillaTilt.init(document.querySelectorAll("[data-tilt]"), { max: 3, speed: 400, glare: false });
+                }, 100);
+            }
+        }
+
+        function initSwiperCarousels() {
+            new Swiper('.influencer-swiper', {
+                slidesPerView: 1, spaceBetween: 20, speed: 900, grabCursor: true,
+                navigation: { nextEl: '.swiper-next', prevEl: '.swiper-prev' },
+                breakpoints: {
+                    640: { slidesPerView: 1.5, spaceBetween: 20 },
+                    768: { slidesPerView: 2, spaceBetween: 26 },
+                    1024: { slidesPerView: 3, spaceBetween: 32 }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
