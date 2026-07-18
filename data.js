@@ -4,7 +4,7 @@
  */
 export const siteData = {
     branding: {
-        companyNamePre: "FINNET",
+        companyNamePre: "Piyush",
         companyNamePost: "MEDIA",
         tagline: "Building Digital Icons.",
         agencyEmail: "adityagawvandi2003@gmail.com",
