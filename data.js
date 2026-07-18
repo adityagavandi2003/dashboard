@@ -1,8 +1,15 @@
 /**
- * Finnet Media - Premium Asset & Copy Specifications Map
- * Core JSON Data Architecture
+ * Finnet Media - Premium Global Asset & Copy Map
+ * Re-architected Content Configuration Object
  */
 export const siteData = {
+    branding: {
+        companyNamePre: "FINNET",
+        companyNamePost: "MEDIA",
+        tagline: "Building Digital Icons.",
+        agencyEmail: "adityagawvandi2003@gmail.com",
+        copyright: "© 2026 FINNET MEDIA. CINEMATIC DISRUPTION LAYERS."
+    },
     navigation: [
         { name: "About", target: "#about" },
         { name: "Influencers", target: "#influencers" },
@@ -12,10 +19,22 @@ export const siteData = {
     ],
     hero: {
         badge: "The Global Authority in Talent Architecture",
-        mainTitle: "We Scale Influencers <br class='hidden md:block'> Into <span class='font-serif italic text-gradient-sapphire font-normal'>Global Brands</span>",
+        titleMain: "We Scale Influencers",
+        titleItalic: "Into Global Brands",
         description: "Finnet Media architects 360-degree content scaling landscapes, enterprise infrastructure ventures, and premium monetization frameworks for premier cultural figures.",
         ctaPrimary: "Work With Us",
         ctaSecondary: "Become a Creator"
+    },
+    about: {
+        badge: "Our Vision",
+        title: "Architects of Contemporary Influence",
+        description: "We step beyond transactional logistics to craft distinct legacy strategies. By building proprietary digital products and engineering broadcast-level visual standards, we make sure our roster retains ultimate cultural and commercial authority globally."
+    },
+    sectionHeaders: {
+        influencers: { badge: "The Finnet Elite", title: "Global Roster" },
+        services: { title: "Engineered for Dominance", subtitle: "A refined strategic blueprint designed to launch digital assets to peak authority scales." },
+        process: { title: "The Growth Roadmap" },
+        contact: { title: "Initialize Digital", italicTitle: "Alignment", badge: "Direct Connection", description: "Select your partnership track below. The interface automatically drafts a tailored message layout, ready for direct transmission into our agency desks." }
     },
     influencers: [
         { 
@@ -88,5 +107,9 @@ export const siteData = {
         { phase: "PHASE 02", title: "Ecosystem Structuring", desc: "Synchronizing cinematic aesthetics with multi-channel distribution layers to secure consistent authority." },
         { phase: "PHASE 03", title: "Institutional Allocation", desc: "Unlocking premier commercial deals, enterprise capital allocations, and proprietary digital assets." }
     ],
-    agencyEmail: "adityagavandi2003@gmail.com"  
+    contactTracks: [
+        { key: "Creator", label: "Talent Roster" },
+        { key: "Brand Partner", label: "Brand Partner" },
+        { key: "Agency Representative", label: "Syndicate Rep" }
+    ]
 };
