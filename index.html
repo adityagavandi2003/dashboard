@@ -111,12 +111,8 @@
         <div class="absolute inset-0 opacity-50 mix-blend-screen pointer-events-none bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.2)_0%,transparent_60%)]"></div>
         <div class="relative flex flex-col items-center text-center px-4">
             <div id="loader-aura" class="absolute w-40 h-40 bg-brand-electric/20 rounded-full blur-[60px] -z-10 scale-50 opacity-0"></div>
-            <h1 id="loader-logo" class="text-2xl md:text-4xl font-light tracking-[0.35em] text-white opacity-0 transform translate-y-6 select-none">
-                <!-- Populated Dynamically -->
-            </h1>
-            <p id="loader-status" class="text-[10px] font-serif italic text-blue-300 mt-2 tracking-widest opacity-0">
-                <!-- Populated Dynamically -->
-            </p>
+            <h1 id="loader-logo" class="text-2xl md:text-4xl font-light tracking-[0.35em] text-white opacity-0 transform translate-y-6 select-none"></h1>
+            <p id="loader-status" class="text-[10px] font-serif italic text-blue-300 mt-2 tracking-widest opacity-0"></p>
             <div class="w-36 h-[1px] bg-blue-900/40 mt-8 rounded-full overflow-hidden relative">
                 <div id="loader-bar" class="absolute top-0 left-0 h-full w-0 bg-gradient-to-r from-blue-600 to-blue-400"></div>
             </div>
@@ -128,9 +124,7 @@
     <!-- 2. GLOBAL NAVIGATION -->
     <nav id="main-nav" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-5 px-6 lg:px-12 transparent">
         <div class="max-w-6xl mx-auto flex items-center justify-between">
-            <a href="#hero" id="nav-brand-logo" class="flex items-center gap-1.5 text-base md:text-lg font-light tracking-[0.25em] text-white select-none hover-target h-10 anchor-link">
-                <!-- Populated Dynamically -->
-            </a>
+            <a href="#hero" id="nav-brand-logo" class="flex items-center gap-1.5 text-base md:text-lg font-light tracking-[0.25em] text-white select-none hover-target h-10 anchor-link"></a>
             
             <div id="nav-links-container" class="hidden lg:flex items-center space-x-8 text-[10px] tracking-[0.2em] uppercase text-blue-200/60 font-medium"></div>
 
@@ -151,7 +145,7 @@
         <div id="mobile-links-container" class="flex flex-col gap-6 text-center text-sm tracking-[0.2em] uppercase"></div>
     </div>
 
-    <!-- MAIN TEMPLATE WRAPPER -->
+    <!-- MAIN SCROLL WRAPPER CONTAINER -->
     <main class="relative z-10">
         <section id="hero" class="min-h-screen flex items-center pt-20 px-6 lg:px-12 relative overflow-hidden">
             <div class="absolute inset-0 z-0 bg-[radial-gradient(circle_at_70%_30%,rgba(59,130,246,0.05)_0%,transparent_50%),radial-gradient(circle_at_20%_80%,rgba(29,78,216,0.03)_0%,transparent_50%)]"></div>
@@ -198,15 +192,18 @@
             </div>
         </section>
 
-        <section id="contact" class="py-24 px-6 lg:px-12 bg-[radial-gradient(circle_at_50%_100%,rgba(59,130,246,0.04)_0%,transparent_60%)] border-t border-blue-950/40">
+        <!-- 9. LUXURY EMAIL PREVIEW CONNECTION MODULE -->
+        <section id="contact" class="py-24 px-6 lg:px-12 bg-[radial-gradient(circle_at_50%_100%,rgba(59,130,246,0.05)_0%,transparent_60%)] border-t border-blue-950/40">
             <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 reveal-scroll">
                 
+                <!-- Left Narrative Display Block -->
                 <div id="contact-left-content" class="lg:col-span-5 flex flex-col justify-center space-y-6 pr-0 lg:pr-8 text-center lg:text-left"></div>
 
-                <!-- Right Side: Email Composer Interface Mockup -->
+                <!-- Right Side: Luxury Mock Email Client Interface -->
                 <div class="lg:col-span-7 bg-[#050c1e] border border-blue-900/30 rounded-none p-6 font-sans relative flex flex-col justify-between group shadow-2xl">
                     <div class="absolute inset-0 bg-gradient-to-tr from-blue-950/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
                     <div>
+                        <!-- Header Field Enclosures -->
                         <div class="space-y-3 pb-4 mb-4 border-b border-blue-950/50 text-xs text-blue-100/70">
                             <div class="flex items-center space-x-3">
                                 <span class="w-12 text-blue-400/50 select-none font-mono">To:</span>
@@ -217,8 +214,12 @@
                                 <span class="font-medium tracking-wide text-blue-200">Finnet Partnership Inquiry (<span id="email-subject-track">Creator</span>)</span>
                             </div>
                         </div>
+
+                        <!-- Read-only Email Body Envelope -->
                         <div id="email-preview-body-container" class="pt-2 text-left text-xs md:text-sm text-gray-300 leading-relaxed min-h-[120px] select-text"></div>
                     </div>
+
+                    <!-- Dispatch Trigger Footer -->
                     <div class="pt-4 border-t border-blue-950/40 mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                         <span class="text-[9px] text-blue-300/30 tracking-wider font-mono select-none">READY FOR CLIENT HANDOFF</span>
                         <button id="direct-mail-trigger" class="hover-target w-full sm:w-auto px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white text-[9px] tracking-[0.25em] font-bold uppercase transition-all duration-300 shadow-lg shadow-blue-900/40 flex items-center justify-center gap-2">
@@ -235,10 +236,123 @@
     <!-- FOOTER SHELL -->
     <footer id="global-footer" class="bg-brand-deep w-full border-t border-blue-950/40 pt-16 pb-8 overflow-hidden"></footer>
 
-    <!-- RUNTIME EXECUTION FRAMEWORK MODULE -->
-    <script type="module">
-        import { siteData } from './data.js';
+    <!-- CORE INTEGRATED DATA & RUNTIME ARCHITECTURE JS -->
+    <script type="text/javascript">
+        // 1. INLINED CONTENT MAP Object Source
+        const siteData = {
+            branding: {
+                tabTitle: "PIYUSH MEDIA | Architecture of Digital Icons",
+                companyNamePre: "PIYUSH",
+                companyNamePost: "MEDIA",
+                tagline: "Building Digital Icons.",
+                agencyEmail: "hello@finnetmedia.com",
+                copyright: "© 2026 FINNET MEDIA. CINEMATIC DISRUPTION LAYERS."
+            },
+            navigation: [
+                { name: "About", target: "#about" },
+                { name: "Influencers", target: "#influencers" },
+                { name: "Services", target: "#services" },
+                { name: "Metrics", target: "#why-us" },
+                { name: "Process", target: "#process" }
+            ],
+            hero: {
+                badge: "The Global Authority in Talent Architecture",
+                titleMain: "We Scale Influencers",
+                titleItalic: "Into Global Brands",
+                description: "Finnet Media architects 360-degree content scaling landscapes, enterprise infrastructure ventures, and premium monetization frameworks for premier cultural figures.",
+                ctaPrimary: "Work With Us",
+                ctaSecondary: "Become a Creator"
+            },
+            about: {
+                badge: "Our Vision",
+                title: "Architects of Contemporary Influence",
+                description: "We step beyond transactional logistics to craft distinct legacy strategies. By building proprietary digital products and engineering broadcast-level visual standards, we make sure our roster retains ultimate cultural and commercial authority globally."
+            },
+            sectionHeaders: {
+                influencers: { badge: "The Finnet Elite", title: "Global Roster" },
+                services: { title: "Engineered for Dominance", subtitle: "A refined strategic blueprint designed to launch digital assets to peak authority scales." },
+                process: { title: "The Growth Roadmap" },
+                contact: { title: "Initialize Digital", italicTitle: "Alignment", badge: "Direct Connection", description: "Select your partnership track below. The interface automatically drafts a tailored message layout, ready for direct transmission into our agency desks." }
+            },
+            influencers: [
+                { 
+                    name: "Aria V.", 
+                    category: "Lifestyle & Fashion", 
+                    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80", 
+                    reach: 2, 
+                    engagement: 14, 
+                    reachUnit: "M+", 
+                    engagementUnit: "%" 
+                },
+                { 
+                    name: "Julian X.", 
+                    category: "Tech / Futurist", 
+                    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80", 
+                    reach: 8, 
+                    engagement: 22, 
+                    reachUnit: "M+", 
+                    engagementUnit: "+" 
+                },
+                { 
+                    name: "Sierra K.", 
+                    category: "Luxury & Travel", 
+                    image: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=800&q=80", 
+                    reach: 5, 
+                    engagement: 9, 
+                    reachUnit: "M+", 
+                    engagementUnit: "x" 
+                }
+            ],
+            bentoServices: [
+                { 
+                    type: "large", 
+                    order: "01 // MANAGEMENT", 
+                    icon: "psychology", 
+                    title: "Elite Talent Management", 
+                    desc: "We craft comprehensive professional architectures. From brand integrity calibration arrays to legal syndicate routing systems, we preserve your identity infrastructure.", 
+                    tags: ["Contracts Matrix", "PR Placement", "Asset Safety"] 
+                },
+                { 
+                    type: "accent", 
+                    icon: "videocam", 
+                    title: "Cinematic Studio", 
+                    desc: "In-house production engineering processing high-fidelity media layout properties.", 
+                    linkText: "View Portfolio" 
+                },
+                { 
+                    type: "small", 
+                    icon: "handshake", 
+                    title: "Brand Integration", 
+                    desc: "Connecting curated rosters with enterprise global houses for high-value storytelling ventures." 
+                },
+                { 
+                    type: "small-icon", 
+                    icon: "monitoring", 
+                    bgIcon: "trending_up", 
+                    title: "Monetization Operations", 
+                    desc: "Financial deployment infrastructures mapping long-tail alternative assets and decentralized income routes." 
+                }
+            ],
+            metrics: [
+                { label: "Audience Reach", value: 20, suffix: "M+" },
+                { label: "Enterprise Deals", value: 500, suffix: "+" },
+                { label: "Elite Creators", value: 150, suffix: "+" },
+                { label: "Retention Scale", value: 98, suffix: "%" }
+            ],
+            brands: ["SAMSUNG", "NETFLIX", "ADIDAS", "MERCEDES", "ROLEX", "CANON"],
+            timeline: [
+                { phase: "PHASE 01", title: "Discovery Strategy Matrix", desc: "Deep data analytics parsing current demographic positioning and untapped scale capacity vectors." },
+                { phase: "PHASE 02", title: "Ecosystem Structuring", desc: "Synchronizing cinematic aesthetics with multi-channel distribution layers to secure consistent authority." },
+                { phase: "PHASE 03", title: "Institutional Allocation", desc: "Unlocking premier commercial deals, enterprise capital allocations, and proprietary digital assets." }
+            ],
+            contactTracks: [
+                { key: "Creator", label: "Talent Roster" },
+                { key: "Brand Partner", label: "Brand Partner" },
+                { key: "Agency Representative", label: "Syndicate Rep" }
+            ]
+        };
 
+        // 2. RUNTIME LOGIC INJECTION ENGINE
         document.addEventListener('DOMContentLoaded', () => {
             gsap.registerPlugin(ScrollTrigger);
             
@@ -254,16 +368,18 @@
 
         let lenisInstance;
 
-        // 3. COMPLETE MODULAR LAYOUT INJECTION ENGINE
         function renderDynamicArchitecture() {
             const b = siteData.branding;
             
-            // Loader & Branding Injections
+            // Absolute Browser tab window title synchronization fix
+            document.title = b.tabTitle;
+            
+            // Loader & Logo Layout Calculations
             document.getElementById('loader-logo').innerHTML = `${b.companyNamePre} <span class="font-bold text-gradient-sapphire">${b.companyNamePost}</span>`;
             document.getElementById('loader-status').innerText = b.tagline;
             document.getElementById('nav-brand-logo').innerHTML = `<span class="inline-block pt-[2px]">${b.companyNamePre}</span><span class="font-bold text-gradient-sapphire pt-[2px]">${b.companyNamePost}</span>`;
             
-            // Navigation Elements Injection
+            // Navigation Links Mapping
             const navLinks = document.getElementById('nav-links-container');
             const mobileLinks = document.getElementById('mobile-links-container');
             siteData.navigation.forEach(item => {
@@ -271,7 +387,7 @@
                 mobileLinks.innerHTML += `<a class="mobile-link anchor-link text-white font-light hover:text-blue-400 transition-colors" href="${item.target}">${item.name}</a>`;
             });
 
-            // Hero Elements Injection
+            // Hero Frame Content Mapping
             document.getElementById('hero-content').innerHTML = `
                 <div class="inline-flex items-center space-x-2 glass-premium px-4 py-1.5 border-white/5 transform opacity-0 translate-y-4 reveal-hero">
                     <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
@@ -287,7 +403,7 @@
                 </div>
             `;
 
-            // About Interstitial Injection
+            // About Interstitial Content Mapping
             document.getElementById('about-content').innerHTML = `
                 <div>
                     <span class="text-[9px] uppercase tracking-[0.35em] text-blue-400 font-semibold mb-2 block">${siteData.about.badge}</span>
@@ -296,7 +412,7 @@
                 <p class="text-blue-200/60 text-xs font-light leading-relaxed tracking-wide">${siteData.about.description}</p>
             `;
 
-            // Influencers Core Headers & Carousel Generation
+            // Roster Header & Swiper Slider Compilation
             const infHeader = siteData.sectionHeaders.influencers;
             document.getElementById('influencers-header-block').innerHTML = `
                 <div>
@@ -331,7 +447,7 @@
                     </div>`;
             });
 
-            // Services Bento Matrix Grid Population
+            // Bento Strategic Capabilities Mapping
             const sHead = siteData.sectionHeaders.services;
             document.getElementById('services-header-block').innerHTML = `<h2 class="text-2xl lg:text-4xl font-light tracking-tight mb-4">${sHead.title}</h2><p class="text-blue-200/60 font-light text-xs tracking-wide leading-relaxed">${sHead.subtitle}</p>`;
             
@@ -477,7 +593,7 @@
             `;
         }
 
-        // 4. PRE-FILLED MAIL REDIRECTION
+        // 4. LUXURY MOCK EMAIL CLIENT DISPATCH CONFIGURATOR
         function initDirectMailRouter() {
             let activeTrack = "Creator";
             const selectors = document.querySelectorAll('.track-selector');
